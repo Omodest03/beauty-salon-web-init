@@ -1,0 +1,22 @@
+# Docker
+postgres_data/
+pgadmin_data/
+
+# Node.js
+node_modules/
+backend/node_modules/
+.env
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
