@@ -27,7 +27,6 @@
             min-height: 100vh;
         }
         
-        /* Ключевое исправление — заставляем CSS уважать inline-стили */
         #loginContainer {
             transition: none;
         }
@@ -296,7 +295,7 @@
         </div>
     </div>
 
-    <!-- Основной интерфейс (скрыт до авторизации) -->
+    <!-- Основной интерфейс -->
     <div id="appContainer" style="display: none;">
         <div class="container-fluid p-0">
             <div class="row g-0">
@@ -306,7 +305,6 @@
                         <i class="bi bi-flower1"></i> Шалфей
                     </div>
                     <nav class="nav flex-column mt-3" id="navMenu">
-                        <!-- Меню будет динамически заполняться -->
                     </nav>
                     <div class="logout-btn">
                         <button class="btn btn-danger w-100" onclick="logout()">

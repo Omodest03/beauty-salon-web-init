@@ -1,4 +1,4 @@
-// report.js - отчёт по поставкам с гистограммой
+// report.js - отчёт по поставкам 
 
 let currentReportData = [];
 
@@ -135,7 +135,6 @@ async function generateChartImage() {
         }
     });
     
-    // Сортируем по сумме и берём топ-10
     const sorted = Object.entries(materialTotals)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10);
@@ -150,7 +149,6 @@ async function generateChartImage() {
     
     const ctx = canvas.getContext('2d');
     
-    // Очищаем предыдущий график
     if (window.materialChart) {
         window.materialChart.destroy();
     }
@@ -215,10 +213,8 @@ window.exportReportToPdf = async function() {
         return;
     }
     
-    // Генерируем гистограмму
     const chartImage = await generateChartImage();
     
-    // Подготовка данных для таблицы
     const tableBody = [];
     let totalSum = 0;
     
@@ -240,7 +236,6 @@ window.exportReportToPdf = async function() {
         { text: 'ИТОГО: ' + totalSum.toLocaleString() + ' руб', alignment: 'right', bold: true, fillColor: '#e9ecef' }
     ]);
     
-    // Основная часть документа (портретная ориентация)
     const documentDefinition = {
         pageOrientation: 'portrait',
         pageSize: 'A4',
@@ -308,7 +303,6 @@ window.exportReportToPdf = async function() {
         }
     };
     
-    // Добавляем гистограмму на отдельную альбомную страницу
     if (chartImage) {
         documentDefinition.content.push({ text: '', pageBreak: 'before' });
         documentDefinition.content.push({
@@ -317,7 +311,6 @@ window.exportReportToPdf = async function() {
             alignment: 'center',
             margin: [0, 20, 0, 20]
         });
-        // Устанавливаем альбомную ориентацию для страницы с графиком
         documentDefinition.pageOrientation = 'landscape';
     }
     

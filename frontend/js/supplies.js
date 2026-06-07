@@ -1,4 +1,4 @@
-// supplies.js - управление поставками (без вызова /api/employees)
+// supplies.js - управление поставками
 
 let suppliesData = [];
 let materialsList = [];

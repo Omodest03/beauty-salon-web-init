@@ -103,7 +103,6 @@ function checkAuth() {
         authToken = token;
         currentUser = JSON.parse(user);
         
-        // Принудительно скрываем логин
         const loginDiv = document.getElementById('loginContainer');
         loginDiv.classList.remove('d-flex', 'align-items-center', 'justify-content-center');
         loginDiv.style.setProperty('display', 'none', 'important');
@@ -195,11 +194,9 @@ function getAuthHeaders() {
     };
 }
 
-// Делаем функции глобальными
 window.login = login;
 window.logout = logout;
 
-// Проверяем авторизацию при загрузке
 document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
 });

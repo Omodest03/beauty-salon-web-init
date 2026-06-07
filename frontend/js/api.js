@@ -16,12 +16,6 @@ async function apiRequest(endpoint, options = {}) {
         headers
     });
     
-    //if (response.status === 401 || response.status === 403) {
-        // Токен просрочен или недействителен
-        //logout();
-        //throw new Error('Сессия истекла. Войдите заново.');
-    //}
-    
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Ошибка запроса');
@@ -150,7 +144,7 @@ async function rejectSupply(id) {
     return apiRequest(`/supplies/${id}/reject`, { method: 'PUT' });
 }
 
-// Сотрудники (для супер-админа)
+// Сотрудники 
 async function getEmployees() {
     return apiRequest('/employees');
 }
@@ -183,7 +177,7 @@ async function completeRecord(id, payment_method) {
     });
 }
 
-// Получить мастеров (публичный эндпоинт)
+// Получить мастеров 
 window.getMasters = async function(serviceId = null) {
     const url = serviceId ? `/api/employees/masters?serviceId=${serviceId}` : '/api/employees/masters';
     try {
@@ -217,7 +211,6 @@ async function getReport(from, to) {
     return apiRequest(`/report?from=${from}&to=${to}`);
 }
 
-// Вспомогательные
 async function getFreeSlots(masterId, date, duration) {
     return apiRequest(`/records/masters/${masterId}/free-slots?date=${date}&duration=${duration}`);
 }
@@ -225,13 +218,10 @@ async function getFreeSlots(masterId, date, duration) {
 window.formatDate = function(dateStr) {
     if (!dateStr) return '';
     try {
-        // Если уже в формате DD.MM.YYYY
         if (dateStr.match(/^\d{2}\.\d{2}\.\d{4}$/)) return dateStr;
-        // Если YYYY-MM-DD
         if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
             return dateStr.split('-').reverse().join('.');
         }
-        // ISO формат
         const date = new Date(dateStr);
         if (isNaN(date.getTime())) return dateStr;
         const day = date.getDate().toString().padStart(2, '0');
@@ -242,7 +232,7 @@ window.formatDate = function(dateStr) {
         return dateStr;
     }
 };
-// Получить материалы для услуги (с проверкой доступности)
+// Получить материалы для услуги
 window.getServiceMaterials = async function(serviceId) {
     const response = await fetch(`/api/services/${serviceId}/materials-check`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` }

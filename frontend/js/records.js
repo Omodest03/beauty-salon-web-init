@@ -413,10 +413,8 @@ window.showAddRecordModal = function() {
     alert('Функция создания записи будет реализована в следующем шаге');
 };
 
-// ========== СОЗДАНИЕ ЗАПИСИ ==========
 
 window.showAddRecordModal = async function() {
-    // Очищаем форму
     document.getElementById('recordClientId').innerHTML = '<option value="">-- Выберите клиента --</option>';
     document.getElementById('recordServiceId').innerHTML = '<option value="">-- Выберите услугу --</option>';
     document.getElementById('recordMasterId').innerHTML = '<option value="">-- Сначала выберите услугу --</option>';
@@ -426,14 +424,12 @@ window.showAddRecordModal = async function() {
     document.getElementById('recordDate').value = '';
     document.getElementById('recordPrice').value = '';
     
-    // Загружаем списки клиентов и услуг
     try {
         const [clients, services] = await Promise.all([
             getClients(),
             getServices()
         ]);
         
-        // Заполняем клиентов
         const clientSelect = document.getElementById('recordClientId');
         clients.forEach(client => {
             const option = document.createElement('option');
@@ -442,7 +438,6 @@ window.showAddRecordModal = async function() {
             clientSelect.appendChild(option);
         });
         
-        // Заполняем услуги
         const serviceSelect = document.getElementById('recordServiceId');
         services.forEach(service => {
             const option = document.createElement('option');
@@ -456,7 +451,6 @@ window.showAddRecordModal = async function() {
         const modal = new bootstrap.Modal(document.getElementById('recordModal'));
         modal.show();
         
-        // ===== ОБРАБОТЧИК ВЫБОРА УСЛУГИ =====
         document.getElementById('recordServiceId').onchange = async function() {
             const selectedOption = this.options[this.selectedIndex];
             const serviceId = this.value;
@@ -466,7 +460,6 @@ window.showAddRecordModal = async function() {
             document.getElementById('recordPrice').value = price ? price.toLocaleString() + ' руб' : '';
             
             if (serviceId) {
-                // === ПРОВЕРКА ДОСТУПНОСТИ МАТЕРИАЛОВ ===
                 try {
                     const materialCheck = await window.checkMaterialsAvailability(serviceId);
                     if (!materialCheck.available) {
@@ -509,7 +502,7 @@ window.showAddRecordModal = async function() {
             }
         };
         
-        // Обработчик изменения мастера (перезагружаем слоты)
+        // Обработчик изменения мастера
         document.getElementById('recordMasterId').onchange = async function() {
             const masterId = this.value;
             const date = document.getElementById('recordDate').value;
@@ -541,7 +534,6 @@ async function loadMastersForService(serviceId) {
     masterSelect.disabled = true;
     
     try {
-        // Загружаем мастеров для услуги
         const masters = await window.getMasters(serviceId);
         
         masterSelect.innerHTML = '<option value="">-- Выберите мастера --</option>';

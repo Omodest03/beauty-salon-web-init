@@ -37,7 +37,7 @@ app.use('/api/master', masterRecordsRouter);
 app.use('/api/report', reportRouter);
 app.use('/api/transactions', transactionsRouter);
 
-// Отчёт для супер-админа (по месяцам)
+// Отчёт для супер-админа 
 app.get('/api/employees/report', authenticateToken, isSuperAdmin, async (req, res) => {
     const { year } = req.query;
     try {

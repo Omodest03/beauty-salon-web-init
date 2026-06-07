@@ -1,4 +1,4 @@
-// superadmin-report.js - отчёт по записям с выбором года и гистограммой
+// superadmin-report.js - отчёт по записям 
 
 let superadminReportData = [];
 
@@ -454,7 +454,6 @@ window.exportEmployeesReportToPdf = async function() {
         }
     }
     
-    // Генерируем гистограмму
     const profitChartImage = await generateProfitChartImage(year, superadminReportData);
     if (profitChartImage) {
         content.push({ text: '', pageBreak: 'before' });
@@ -483,7 +482,6 @@ window.exportEmployeesReportToPdf = async function() {
         }
     };
     
-    // Для страницы с гистограммой делаем альбомную ориентацию
     if (profitChartImage) {
         documentDefinition.pageOrientation = 'landscape';
     }
